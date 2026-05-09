@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>TRY OUT UAS MATEMATIKA KELAS 6 SD</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(145deg, #1e5a8a 0%, #0d3b5e 100%);
+            padding: 10px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: #f9fafc;
+            border-radius: 25px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            padding: 15px 20px 25px;
+            transition: all 0.2s;
+        }
+
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0d47a1 0%, #1976d2 50%, #2196f3 100%);
+            background-size: 200% 200%;
+            animation: gradientBg 8s ease infinite;
+            color: white;
+            padding: 20px 15px;
+            border-radius: 20px 20px 20px 20px;
+            text-align: center;
+            margin: -15px -20px 20px -20px;
+            box-shadow: 0 8px 20px rgba(13, 71, 161, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+            background-size: 80px 80px;
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .timer-container {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(238, 90, 36, 0.3);
+        }
+
+        .timer {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+        }
+
+        .timer.warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            animation: pulse 1s infinite;
+        }
+
+        .timer.danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .start-screen, .quiz-screen, .result-screen, .review-screen {
+            display: none;
+        }
+
+        .start-screen.active, .quiz-screen.active, .result-screen.active, .review-screen.active {
+            display: block;
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        .start-screen h2 {
+            color: #1e5a8a;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .start-screen p {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.35);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(76, 175, 80, 0.45);
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #1976d2, #1565c0);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin: 25px 0 20px;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(25, 118, 210, 0.3);
+        }
+
+        .question-box {
+            background: linear-gradient(145deg, #ffffff, #f5f7fa);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid #1976d2;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #1976d2;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option:hover {
+            border-color: #1976d2;
+            background: #f0f7ff;
+            transform: translateX(3px);
+        }
+
+        .option.selected {
+            border-color: #1976d2;
+            background: #e3f2fd;
+        }
+
+        .option-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 28px;
+            height: 28px;
+            background: #e0e0e0;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 13px;
+            color: #555;
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-letter {
+            background: #1976d2;
+            color: white;
+        }
+
+        .essay-box {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid #ff9800;
+        }
+
+        .essay-box textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s;
+            margin-bottom: 15px;
+            min-height: 100px;
+        }
+
+        .essay-box textarea:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+
+        .essay-box textarea:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #1976d2, #1565c0);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(25, 118, 210, 0.3);
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(25, 118, 210, 0.4);
+        }
+
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .result-box {
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #f5f7fa, #e8ecf1);
+            margin: 0 auto 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 8px solid #1976d2;
+        }
+
+        .score-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1976d2;
+        }
+
+        .score-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .result-message {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-value.correct { color: #4CAF50; }
+        .stat-value.wrong { color: #f44336; }
+        .stat-value.total { color: #1976d2; }
+
+        .stat-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-review, .btn-restart {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-review {
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        .btn-review:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
+        }
+
+        .btn-restart {
+            background: linear-gradient(135deg, #757575, #616161);
+            color: white;
+            box-shadow: 0 5px 15px rgba(117, 117, 117, 0.3);
+        }
+
+        .btn-restart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(117, 117, 117, 0.4);
+        }
+
+        .review-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-left: 5px solid #e0e0e0;
+        }
+
+        .review-item.correct {
+            border-left-color: #4CAF50;
+        }
+
+        .review-item.wrong {
+            border-left-color: #f44336;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .review-number {
+            font-weight: 700;
+            color: #333;
+        }
+
+        .review-status {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .review-status.correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .review-status.wrong {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .review-question {
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .review-answer {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .review-answer .label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .review-answer .value.correct {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .review-answer .value.wrong {
+            color: #f44336;
+        }
+
+        .review-explanation {
+            background: #f0f7ff;
+            border-left: 4px solid #1976d2;
+            padding: 12px 15px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #1565c0;
+        }
+
+        .review-essay-answer {
+            background: #f5f5f5;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #1976d2, #1565c0);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(25, 118, 210, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(25, 118, 210, 0.4);
+        }
+
+        .student-info {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .student-info input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 5px;
+            transition: border-color 0.3s;
+        }
+
+        .student-info input:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+
+        .student-info label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .time-up-message {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            animation: pulse 1s infinite;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 10px 15px 20px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                margin: -10px -15px 15px -15px;
+                padding: 15px 10px;
+            }
+            
+            .header h1 {
+                font-size: 18px;
+            }
+            
+            .header p {
+                font-size: 12px;
+            }
+            
+            .timer {
+                font-size: 20px;
+            }
+            
+            .question-box, .essay-box {
+                padding: 15px;
+            }
+            
+            .question-text {
+                font-size: 14px;
+            }
+            
+            .option {
+                padding: 12px;
+                font-size: 13px;
+            }
+            
+            .option-letter {
+                min-width: 25px;
+                height: 25px;
+                font-size: 12px;
+            }
+            
+            .section-title {
+                font-size: 16px;
+                padding: 12px 15px;
+            }
+            
+            .result-stats {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .score-circle {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .score-value {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 TRY OUT UAS MATEMATIKA KELAS 6 SD</h1>
+            <p>Materi: Desimal & Pecahan, Kubus & Balok, Peluang, Rasio</p>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="start-screen active" id="startScreen">
+            <div class="student-info">
+                <label for="studentName">Nama Siswa:</label>
+                <input type="text" id="studentName" placeholder="Masukkan nama kamu..." required>
+            </div>
+            <h2>Selamat Datang!</h2>
+            <p>Ujian ini terdiri dari:<br>
+            • 20 Soal Pilihan Ganda<br>
+            • 10 Soal Essay<br>
+            <strong>Waktu: 45 Menit</strong><br>
+            Setelah selesai, Anda dapat melihat review soal dan pembahasan lengkap!<br>
+            Kerjakan dengan sungguh-sungguh ya!</p>
+            <button class="btn-start" onclick="startExam()">Mulai Ujian</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div class="quiz-screen" id="quizScreen">
+            <div class="timer-container" id="timerContainer">
+                <div>Sisa Waktu</div>
+                <div class="timer" id="timer">45:00</div>
+            </div>
+            
+            <div id="timeUpMessage" style="display: none;" class="time-up-message">
+                ⏰ Waktu Habis! Ujian telah berakhir.
+            </div>
+
+            <div class="section-title">PILIHAN GANDA</div>
+            <div id="multipleChoiceQuestions"></div>
+
+            <div class="section-title">ESSAY</div>
+            <div id="essayQuestions"></div>
+
+            <button class="btn-submit" id="btnSubmit" onclick="submitExam()">Selesai & Kirim Jawaban</button>
+        </div>
+
+        <!-- Result Screen -->
+        <div class="result-screen" id="resultScreen">
+            <div class="result-box">
+                <h2>Hasil Ujian</h2>
+                <div class="score-circle">
+                    <div class="score-value" id="scoreValue">0</div>
+                    <div class="score-label">dari 100</div>
+                </div>
+                <div class="result-message" id="resultMessage"></div>
+                <div class="result-stats">
+                    <div class="stat-item">
+                        <div class="stat-value correct" id="correctCount">0</div>
+                        <div class="stat-label">Benar</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value wrong" id="wrongCount">0</div>
+                        <div class="stat-label">Salah</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value total" id="totalCount">30</div>
+                        <div class="stat-label">Total Soal</div>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-review" onclick="showReview()">Review Soal</button>
+                    <button class="btn-restart" onclick="restartExam()">Ulangi Ujian</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review Screen -->
+        <div class="review-screen" id="reviewScreen">
+            <h2 style="text-align: center; margin-bottom: 25px; color: #333;">Review Soal dan Jawaban</h2>
+            <div id="reviewList"></div>
+            <div style="text-align: center;">
+                <button class="btn-back" onclick="backToResult()">Kembali ke Hasil</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timer;
+        let timeLeft = 45 * 60; // 45 minutes in seconds
+        let examEnded = false;
+
+        const multipleChoiceQuestions = [
+            {
+                no: 1,
+                question: "Hasil dari 3,5 + 2,75 adalah …",
+                options: ["5,15", "6,25", "6,75", "7,25"],
+                answer: 1
+            },
+            {
+                no: 2,
+                question: "Hasil dari 7,2 × 5 adalah …",
+                options: ["31", "35", "36", "37"],
+                answer: 2
+            },
+            {
+                no: 3,
+                question: "Bentuk pecahan dari 0,75 adalah …",
+                options: ["1/2", "2/5", "3/4", "4/5"],
+                answer: 2
+            },
+            {
+                no: 4,
+                question: "Hasil dari 5/8 + 1/4 adalah …",
+                options: ["6/8", "7/8", "8/8", "9/8"],
+                answer: 1
+            },
+            {
+                no: 5,
+                question: "Hasil dari 3/5 − 1/10 adalah …",
+                options: ["1/2", "2/5", "3/10", "4/5"],
+                answer: 0
+            },
+            {
+                no: 6,
+                question: "Sebuah kubus memiliki panjang rusuk 6 cm. Volume kubus tersebut adalah …",
+                options: ["36 cm³", "72 cm³", "108 cm³", "216 cm³"],
+                answer: 3
+            },
+            {
+                no: 7,
+                question: "Balok memiliki panjang 8 cm, lebar 5 cm, dan tinggi 4 cm. Volume balok adalah …",
+                options: ["120 cm³", "140 cm³", "160 cm³", "180 cm³"],
+                answer: 2
+            },
+            {
+                no: 8,
+                question: "Luas permukaan kubus dengan rusuk 4 cm adalah …",
+                options: ["64 cm²", "96 cm²", "128 cm²", "144 cm²"],
+                answer: 1
+            },
+            {
+                no: 9,
+                question: "Sebuah dadu dilempar satu kali. Peluang muncul angka 3 adalah …",
+                options: ["1/2", "1/3", "1/4", "1/6"],
+                answer: 3
+            },
+            {
+                no: 10,
+                question: "Dalam sebuah kotak terdapat 5 bola merah dan 5 bola biru. Peluang mengambil bola merah adalah …",
+                options: ["1/10", "1/5", "1/2", "2/3"],
+                answer: 2
+            },
+            {
+                no: 11,
+                question: "Rasio uang Andi dan Budi adalah 2 : 3. Jika uang Andi Rp20.000, maka uang Budi adalah …",
+                options: ["Rp25.000", "Rp30.000", "Rp35.000", "Rp40.000"],
+                answer: 1
+            },
+            {
+                no: 12,
+                question: "Perbandingan 15 : 25 dapat disederhanakan menjadi …",
+                options: ["1 : 2", "2 : 3", "3 : 5", "5 : 7"],
+                answer: 2
+            },
+            {
+                no: 13,
+                question: "Hasil dari 4,8 ÷ 0,6 adalah …",
+                options: ["6", "7", "8", "9"],
+                answer: 2
+            },
+            {
+                no: 14,
+                question: "Pecahan yang senilai dengan 2/3 adalah …",
+                options: ["3/4", "4/6", "5/8", "6/12"],
+                answer: 1
+            },
+            {
+                no: 15,
+                question: "Volume kubus dengan rusuk 10 cm adalah …",
+                options: ["100 cm³", "500 cm³", "1000 cm³", "2000 cm³"],
+                answer: 2
+            },
+            {
+                no: 16,
+                question: "Balok dengan ukuran 12 cm × 5 cm × 2 cm memiliki volume …",
+                options: ["100 cm³", "110 cm³", "120 cm³", "130 cm³"],
+                answer: 2
+            },
+            {
+                no: 17,
+                question: "Peluang muncul angka genap pada pelemparan sebuah dadu adalah …",
+                options: ["1/6", "1/3", "1/2", "2/3"],
+                answer: 2
+            },
+            {
+                no: 18,
+                question: "Jika rasio laki-laki dan perempuan dalam kelas adalah 3 : 2 dan jumlah siswa laki-laki 18 orang, maka jumlah siswa perempuan adalah …",
+                options: ["10", "12", "14", "16"],
+                answer: 1
+            },
+            {
+                no: 19,
+                question: "Hasil dari 1,25 + 3,75 adalah …",
+                options: ["4", "4,5", "5", "5,5"],
+                answer: 0
+            },
+            {
+                no: 20,
+                question: "Hasil dari 7/9 × 3/7 adalah …",
+                options: ["1/3", "2/3", "3/7", "7/9"],
+                answer: 0
+            }
+        ];
+
+        const essayQuestions = [
+            {
+                no: 21,
+                question: "Hitung hasil berikut:<br>a. 4,25 + 3,5<br>b. 8,4 − 2,75",
+                expectedAnswer: "7,75 dan 5,65",
+                explanation: "Penyelesaian:<br>a. 4,25 + 3,5 = 7,75<br>b. 8,4 − 2,75 = 5,65<br><br>Cara: Sejajarkan desimal, lakukan operasi penjumlahan/pengurangan biasa."
+            },
+            {
+                no: 22,
+                question: "Hitung hasil berikut:<br>a. 2/3 + 1/6<br>b. 5/8 − 1/4",
+                expectedAnswer: "5/6 dan 3/8",
+                explanation: "Penyelesaian:<br>a. 2/3 + 1/6 = 4/6 + 1/6 = 5/6<br>b. 5/8 − 1/4 = 5/8 − 2/8 = 3/8<br><br>Cara: Samakan penyebut terlebih dahulu, baru lakukan operasi."
+            },
+            {
+                no: 23,
+                question: "Sebuah kubus memiliki panjang rusuk 7 cm. Hitung volumenya!",
+                expectedAnswer: "343 cm³",
+                explanation: "Penyelesaian:<br>Volume kubus = s³<br>Volume = 7³ = 7 × 7 × 7 = 343 cm³<br><br>Rumus volume kubus adalah sisi pangkat 3."
+            },
+            {
+                no: 24,
+                question: "Sebuah balok memiliki panjang 10 cm, lebar 6 cm, dan tinggi 5 cm. Hitung volumenya!",
+                expectedAnswer: "300 cm³",
+                explanation: "Penyelesaian:<br>Volume balok = p × l × t<br>Volume = 10 × 6 × 5 = 300 cm³<br><br>Rumus volume balok adalah panjang × lebar × tinggi."
+            },
+            {
+                no: 25,
+                question: "Sebuah dadu dilempar satu kali. Tentukan peluang muncul angka 5!",
+                expectedAnswer: "1/6",
+                explanation: "Penyelesaian:<br>Peluang = jumlah kejadian yang diinginkan / jumlah semua kemungkinan<br>Peluang = 1/6<br><br>Dadu memiliki 6 sisi, hanya 1 sisi yang menunjukkan angka 5."
+            },
+            {
+                no: 26,
+                question: "Perbandingan umur Rina dan Dika adalah 4 : 5. Jika umur Rina 20 tahun, berapa umur Dika?",
+                expectedAnswer: "25 tahun",
+                explanation: "Penyelesaian:<br>Rina : Dika = 4 : 5<br>20 : x = 4 : 5<br>x = (20 × 5) ÷ 4 = 25<br><br>Umur Dika adalah 25 tahun."
+            },
+            {
+                no: 27,
+                question: "Hitung luas permukaan kubus yang memiliki rusuk 8 cm!",
+                expectedAnswer: "384 cm²",
+                explanation: "Penyelesaian:<br>Luas permukaan kubus = 6 × s²<br>Luas = 6 × 8² = 6 × 64 = 384 cm²<br><br>Kubus memiliki 6 sisi persegi yang sama."
+            },
+            {
+                no: 28,
+                question: "Dalam sebuah kotak terdapat 3 bola merah, 4 bola hijau, dan 3 bola biru. Tentukan peluang mengambil bola hijau!",
+                expectedAnswer: "2/5 atau 4/10",
+                explanation: "Penyelesaian:<br>Total bola = 3 + 4 + 3 = 10<br>Bola hijau = 4<br>Peluang = 4/10 = 2/5<br><br>Peluang diambil bola hijau adalah 2/5."
+            },
+            {
+                no: 29,
+                question: "Sederhanakan perbandingan berikut:<br>a. 18 : 24<br>b. 30 : 45",
+                expectedAnswer: "3:4 dan 2:3",
+                explanation: "Penyelesaian:<br>a. 18 : 24 = 3 : 4 (dibagi 6)<br>b. 30 : 45 = 2 : 3 (dibagi 15)<br><br>Cari FPB dari kedua angka, lalu bagi kedua angka dengan FPB tersebut."
+            },
+            {
+                no: 30,
+                question: "Hitung hasil berikut:<br>a. 3/4 × 8<br>b. 5,6 ÷ 0,7",
+                expectedAnswer: "6 dan 8",
+                explanation: "Penyelesaian:<br>a. 3/4 × 8 = 3/4 × 8/1 = 24/4 = 6<br>b. 5,6 ÷ 0,7 = 56 ÷ 7 = 8<br><br>Perkalian pecahan: kalikan pembilang dengan pembilang, penyebut dengan penyebut. Pembagian desimal: hilangkan koma dengan mengalikan 10."
+            }
+        ];
+
+        function startExam() {
+            const studentName = document.getElementById('studentName').value;
+            if (!studentName.trim()) {
+                alert('Silakan masukkan nama terlebih dahulu!');
+                return;
+            }
+
+            document.getElementById('startScreen').classList.remove('active');
+            document.getElementById('quizScreen').classList.add('active');
+            
+            renderQuestions();
+            startTimer();
+        }
+
+        function renderQuestions() {
+            // Render multiple choice questions
+            const mcqContainer = document.getElementById('multipleChoiceQuestions');
+            mcqContainer.innerHTML = '';
+            
+            multipleChoiceQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-box';
+                questionDiv.innerHTML = `
+                    <span class="question-number">Soal ${q.no}</span>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((option, optIndex) => `
+                            <div class="option" onclick="selectOption(${index}, ${optIndex})">
+                                <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                                <span>${option}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                mcqContainer.appendChild(questionDiv);
+            });
+
+            // Render essay questions
+            const essayContainer = document.getElementById('essayQuestions');
+            essayContainer.innerHTML = '';
+            
+            essayQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'essay-box';
+                questionDiv.innerHTML = `
+                    <span class="question-number">Soal ${q.no}</span>
+                    <div class="question-text">${q.question}</div>
+                    <textarea id="essay-${index}" placeholder="Ketik jawaban Anda di sini..."></textarea>
+                `;
+                essayContainer.appendChild(questionDiv);
+            });
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            if (examEnded) return;
+            
+            const options = document.querySelectorAll(`#multipleChoiceQuestions .question-box:nth-child(${questionIndex + 1}) .option`);
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            
+            // Store the selected answer
+            if (!window.userAnswers) window.userAnswers = {};
+            window.userAnswers[`mcq-${questionIndex}`] = optionIndex;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 300) { // 5 minutes warning
+                    document.getElementById('timerContainer').classList.add('warning');
+                }
+                
+                if (timeLeft <= 60) { // 1 minute danger
+                    document.getElementById('timerContainer').classList.remove('warning');
+                    document.getElementById('timerContainer').classList.add('danger');
+                }
+                
+                if (timeLeft <= 0) {
+                    endExam();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function endExam() {
+            if (examEnded) return;
+            
+            examEnded = true;
+            clearInterval(timer);
+            
+            document.getElementById('timeUpMessage').style.display = 'block';
+            document.getElementById('btnSubmit').disabled = true;
+            
+            // Disable all inputs
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                opt.style.opacity = '0.6';
+            });
+            document.querySelectorAll('textarea').forEach(textarea => {
+                textarea.disabled = true;
+            });
+            
+            // Auto submit after showing message
+            setTimeout(() => {
+                submitExam();
+            }, 3000);
+        }
+
+        function submitExam() {
+            if (examEnded && timeLeft > 0) return;
+            
+            // Check if all multiple choice questions are answered
+            let answeredMCQ = 0;
+            for (let i = 0; i < multipleChoiceQuestions.length; i++) {
+                const userAnswer = window.userAnswers ? window.userAnswers[`mcq-${i}`] : undefined;
+                if (userAnswer !== undefined) {
+                    answeredMCQ++;
+                }
+            }
+            
+            // Check if all essay questions are answered
+            let answeredEssay = 0;
+            for (let i = 0; i < essayQuestions.length; i++) {
+                const essayAnswer = document.getElementById(`essay-${i}`);
+                if (essayAnswer && essayAnswer.value.trim() !== '') {
+                    answeredEssay++;
+                }
+            }
+            
+            // Validate all questions are answered
+            const totalAnswered = answeredMCQ + answeredEssay;
+            const totalQuestions = multipleChoiceQuestions.length + essayQuestions.length;
+            
+            if (totalAnswered < totalQuestions && timeLeft > 0) {
+                alert(`⚠️ Wajib mengisi semua soal sebelum mengirim jawaban!\n\nSoal PG: ${answeredMCQ}/${multipleChoiceQuestions.length}\nSoal Esai: ${answeredEssay}/${essayQuestions.length}\n\nSilakan lengkapi semua jawaban terlebih dahulu.`);
+                return;
+            }
+            
+            clearInterval(timer);
+            examEnded = true;
+            
+            // Calculate score
+            let correctCount = 0;
+            let correctEssay = 0;
+            
+            for (let i = 0; i < multipleChoiceQuestions.length; i++) {
+                const userAnswer = window.userAnswers ? window.userAnswers[`mcq-${i}`] : undefined;
+                if (userAnswer !== undefined && userAnswer === multipleChoiceQuestions[i].answer) {
+                    correctCount++;
+                }
+            }
+            
+            // Check essay answers for correctness
+            for (let i = 0; i < essayQuestions.length; i++) {
+                const essayAnswer = document.getElementById(`essay-${i}`);
+                if (essayAnswer && essayAnswer.value.trim() !== '') {
+                    if (checkEssayAnswer(essayAnswer.value, essayQuestions[i].expectedAnswer)) {
+                        correctEssay++;
+                    }
+                }
+            }
+            
+            // Calculate score based on correctness
+            // Multiple choice: 70 points total, Essay: 30 points total
+            const mcqScore = (correctCount / multipleChoiceQuestions.length) * 70;
+            const essayScore = (correctEssay / essayQuestions.length) * 30;
+            
+            const totalScore = Math.round(mcqScore + essayScore);
+            
+            // Show results (total correct includes MCQ + correct essays)
+            showResults(correctCount + correctEssay, (multipleChoiceQuestions.length + essayQuestions.length) - (correctCount + correctEssay), totalScore, answeredMCQ, answeredEssay);
+        }
+
+        function showResults(correct, wrong, score, answeredMCQ = 0, answeredEssay = 0) {
+            document.getElementById('quizScreen').classList.remove('active');
+            document.getElementById('resultScreen').classList.add('active');
+            
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('wrongCount').textContent = wrong;
+            
+            let message = '';
+            if (score >= 90) {
+                message = '🌟 Sangat Baik! Pertahankan prestasimu!';
+            } else if (score >= 75) {
+                message = '👍 Baik! Terus belajar lebih giat lagi!';
+            } else if (score >= 60) {
+                message = '📚 Cukup! Perlu lebih banyak belajar!';
+            } else if (answeredMCQ === 0 && answeredEssay === 0) {
+                message = '⚠️ Tidak ada jawaban yang dikirim. Silakan ulangi ujian.';
+            } else {
+                message = '💪 Kurang! Jangan menyerah, coba lagi!';
+            }
+            
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        function showReview() {
+            document.getElementById('resultScreen').classList.remove('active');
+            document.getElementById('reviewScreen').classList.add('active');
+            
+            const reviewList = document.getElementById('reviewList');
+            reviewList.innerHTML = '';
+            
+            // Add multiple choice questions review
+            const mcqSection = document.createElement('div');
+            mcqSection.innerHTML = '<div class="section-title">Review Pilihan Ganda</div>';
+            reviewList.appendChild(mcqSection);
+            
+            multipleChoiceQuestions.forEach((q, index) => {
+                const userAnswer = window.userAnswers ? window.userAnswers[`mcq-${index}`] : undefined;
+                const isCorrect = userAnswer !== undefined && userAnswer === q.answer;
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.className = `review-item ${isCorrect ? 'correct' : 'wrong'}`;
+                
+                let userAnswerText = 'Tidak dijawab';
+                if (userAnswer !== undefined) {
+                    userAnswerText = `${String.fromCharCode(65 + userAnswer)}. ${q.options[userAnswer]}`;
+                }
+                
+                const correctAnswerText = `${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}`;
+                
+                reviewItem.innerHTML = `
+                    <div class="review-header">
+                        <span class="review-number">Soal ${q.no}</span>
+                        <span class="review-status ${isCorrect ? 'correct' : 'wrong'}">
+                            ${isCorrect ? 'Benar' : 'Salah'}
+                        </span>
+                    </div>
+                    <div class="review-question">${q.question}</div>
+                    <div class="review-answer">
+                        <span class="label">Jawaban Anda:</span> 
+                        <span class="value ${isCorrect ? 'correct' : 'wrong'}">${userAnswerText}</span>
+                    </div>
+                    ${!isCorrect ? `
+                        <div class="review-answer">
+                            <span class="label">Jawaban Benar:</span> 
+                            <span class="value correct">${correctAnswerText}</span>
+                        </div>
+                    ` : ''}
+                `;
+                
+                reviewList.appendChild(reviewItem);
+            });
+            
+            // Add essay questions review
+            const essaySection = document.createElement('div');
+            essaySection.innerHTML = '<div class="section-title">Review Essay</div>';
+            reviewList.appendChild(essaySection);
+            
+            essayQuestions.forEach((q, index) => {
+                const userAnswer = document.getElementById(`essay-${index}`) ? 
+                    document.getElementById(`essay-${index}`).value : '';
+                
+                // Check if answer is correct (simple keyword matching)
+                const isCorrect = checkEssayAnswer(userAnswer, q.expectedAnswer);
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.className = `review-item ${isCorrect ? 'correct' : 'wrong'}`;
+                
+                reviewItem.innerHTML = `
+                    <div class="review-header">
+                        <span class="review-number">Soal ${q.no}</span>
+                        <span class="review-status ${isCorrect ? 'correct' : 'wrong'}">
+                            ${isCorrect ? 'Benar' : 'Salah'}
+                        </span>
+                    </div>
+                    <div class="review-question">${q.question}</div>
+                    ${userAnswer ? `
+                        <div class="review-answer">
+                            <span class="label">Jawaban Anda:</span> 
+                            <span class="value ${isCorrect ? 'correct' : 'wrong'}">${userAnswer}</span>
+                        </div>
+                    ` : '<div class="review-essay-answer"><strong>Tidak dijawab</strong></div>'}
+                    ${!isCorrect && q.expectedAnswer ? `
+                        <div class="review-answer">
+                            <span class="label">Jawaban Benar:</span> 
+                            <span class="value correct">${q.expectedAnswer}</span>
+                        </div>
+                    ` : ''}
+                    <div class="review-explanation">
+                        <strong>Pembahasan:</strong><br>${q.explanation}
+                    </div>
+                `;
+                
+                reviewList.appendChild(reviewItem);
+            });
+        }
+
+        function backToResult() {
+            document.getElementById('reviewScreen').classList.remove('active');
+            document.getElementById('resultScreen').classList.add('active');
+        }
+
+        function checkEssayAnswer(userAnswer, expectedAnswer) {
+            if (!userAnswer || !userAnswer.trim()) return false;
+            if (!expectedAnswer) return false;
+            
+            // Normalize both answers
+            const normalizedUser = userAnswer.toLowerCase().replace(/\s+/g, '').replace(/[.,;:!?]/g, '');
+            const normalizedExpected = expectedAnswer.toLowerCase().replace(/\s+/g, '').replace(/[.,;:!?]/g, '');
+            
+            // Split expected answer by "atau" or "dan" to check multiple possible answers
+            const possibleAnswers = normalizedExpected.split(/atau|dan/).map(a => a.trim());
+            
+            // Check if user answer contains any of the expected answers
+            for (const possible of possibleAnswers) {
+                if (normalizedUser.includes(possible) || possible.includes(normalizedUser)) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        function restartExam() {
+            // Reset all variables
+            timeLeft = 45 * 60;
+            examEnded = false;
+            window.userAnswers = {};
+            
+            // Clear timer classes
+            document.getElementById('timerContainer').classList.remove('warning', 'danger');
+            document.getElementById('timeUpMessage').style.display = 'none';
+            
+            // Reset screens
+            document.getElementById('resultScreen').classList.remove('active');
+            document.getElementById('reviewScreen').classList.remove('active');
+            document.getElementById('quizScreen').classList.remove('active');
+            document.getElementById('startScreen').classList.add('active');
+            
+            // Clear student name
+            document.getElementById('studentName').value = '';
+        }
+
+        // Prevent going back during exam
+        window.addEventListener('popstate', function(event) {
+            if (document.getElementById('quizScreen').classList.contains('active') && !examEnded) {
+                history.pushState(null, null, location.href);
+                alert('Ujian sedang berlangsung. Anda tidak dapat meninggalkan halaman ini.');
+            }
+        });
+
+        // Prevent refresh during exam
+        window.addEventListener('beforeunload', function(event) {
+            if (document.getElementById('quizScreen').classList.contains('active') && !examEnded) {
+                event.preventDefault();
+                event.returnValue = 'Ujian sedang berlangsung. Apakah Anda yakin ingin meninggalkan halaman ini?';
+            }
+        });
+    </script>
+</body>
+</html>
